@@ -6,11 +6,5 @@ use App\Models\User;
 
 class ExpensePolicy
 {
-    /**
-     * Create a new policy instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    //
 }
