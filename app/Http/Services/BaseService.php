@@ -3,6 +3,8 @@
 namespace App\Http\Services;
 
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 abstract class BaseService implements BaseServiceInterface
 {
@@ -11,12 +13,21 @@ abstract class BaseService implements BaseServiceInterface
     public function __construct(public BaseRepository $baseRepository)
     {}
 
-    public function getAll()
+    /**
+     * Summary of getAll
+     * @return Collection<int, \stdClass>|\Illuminate\Database\Eloquent\Collection<int, \App\Repositories\TModel>
+     */
+    public function getAll(): Collection
     {
         return $this->baseRepository->getAll();
     }
 
-    public function store(array $data)
+    /**
+     * Summary of store
+     * @param array $data
+     * @return Model
+     */
+    public function store(array $data): Model
     {
         return $this->baseRepository->store($data);
     }
@@ -26,13 +37,24 @@ abstract class BaseService implements BaseServiceInterface
         return $this->baseRepository->getById();
     }
 
-    public function update()
+    /**
+     * Summary of update
+     * @param Model $model
+     * @param array $data
+     * @return Model
+     */
+    public function update(Model $model, array $data): Model
     {
-        return $this->baseRepository->update();
+        return $this->baseRepository->update($model, $data);
     }
 
-    public function destroy()
+    /**
+     * Summary of destroy
+     * @param int $id
+     * @return void
+     */
+    public function destroy(int $id): void
     {
-        return $this->baseRepository->destroy();
+        $this->baseRepository->destroy($id);
     }
 }

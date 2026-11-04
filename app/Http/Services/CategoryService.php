@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Repositories\CategoryRepository;
+use Illuminate\Database\Eloquent\Model;
 
 class CategoryService extends BaseService
 {
@@ -13,8 +14,7 @@ class CategoryService extends BaseService
 
     // todo: destroy means set is_active = 0
     // todo: hard destroy means delete category and null category at every expense it have
-
-    public function store(array $data)
+    public function store(array $data): Model
     {
         $data['user_id'] = auth()->user()->id;
         return $this->baseRepository->store($data);

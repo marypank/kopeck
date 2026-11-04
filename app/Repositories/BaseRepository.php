@@ -3,16 +3,25 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 abstract class BaseRepository implements BaseRepositoryInterface
 {
     protected abstract function model(): Model;
 
-    public function getAll()
+    /**
+     * @return Collection<int, \stdClass>|\Illuminate\Database\Eloquent\Collection<int, TModel>
+     */
+    public function getAll(): Collection
     {
-        //
+        return $this->model()->where('user_id', auth()->user()->id)->get();
     }
 
+    /**
+     * Summary of store
+     * @param array $data
+     * @return Model
+     */
     public function store(array $data): Model
     {
         if (!$data) {
@@ -27,13 +36,26 @@ abstract class BaseRepository implements BaseRepositoryInterface
         //
     }
 
-    public function update()
+    /**
+     * Summary of update
+     * @param Model $model
+     * @param array $data
+     * @return Model
+     */
+    public function update(Model $model, array $data): Model
     {
-        //
+        $model->update($data);
+
+        return $model;
     }
 
-    public function destroy()
+    /**
+     * Summary of destroy
+     * @param int $id
+     * @return void
+     */
+    public function destroy(int $id): void
     {
-        //
+        $this->model()::where('id', $id)->delete();
     }
 }
